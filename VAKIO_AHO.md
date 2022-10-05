@@ -12,3 +12,13 @@ https://stackoverflow.com/questions/46566830/how-to-use-create-react-app-with-an
 
 # Tools
 Extension : React Developper Tools (Inspection DOM)
+
+# Hooks
+*Expression*
+ - const [date, setDate] = useState(new Date());
+    => date = new Date() 
+    => setDate() = useState(), 
+        Mais lorsqu'on appelle setDate(), on doit definir le nouveau valeur. 
+        Ex : setDate('New val')
+        Qui changera la valeur de "date" dans toute l'application
+    => date : etat actuel, setDate() : etat suivant
