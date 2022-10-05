@@ -5,5 +5,10 @@ React v 17.0.2
 => npm view react version 
 <!-- On a créé le projet avec la version 18, donc cette ligne de cmd renvoie toujours la version 18 même si on a déjà modifié la version dans package.json -->
 
+=>  Pour voir la version du react utilisé : "react.development.js"
+
 *Downgrad version*
 https://stackoverflow.com/questions/46566830/how-to-use-create-react-app-with-an-older-react-version
+
+# Tools
+Extension : React Developper Tools (Inspection DOM)
