@@ -1,60 +1,53 @@
 import './App.css';
-import ReactDOM from 'react-dom';
-
-function Component(props){
-   return (
-      <>
-         <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            Learn {props.name}
-         </a>
-      </>
-   );
-}
+import { useState } from 'react';
 
 
 function App() {
-	return (
-		<div className="App">
-			<header className="App-header">
-				<Component name={'Angular'} />
-			</header>
-		</div>
-	);
-}
-
-function Techno({lib, link}) {
-   return(
-      <a href={link}> {lib} </a>
-   );
-}
-function Library({array}){
-   return (
-      array.map((item) =>{ 
-         return (
-            <Techno key={item.lib} {...item} />
-         )}
-      )
-   );
-}
- 
- const array = [
-   {
-      'lib' : 'ReactJs',
-      'link' : 'https://fr.reactjs.org/'
-   },
-   {
-      'lib' : 'AngularJs',
-      'link' : 'https://angular.io/'
-   },
-   {
-      'lib' : 'VueJs',
-      'link' : 'https://vuejs.org/'
+   const array = [
+      {
+         'lib': 'ReactJs',
+         'link': 'https://fr.reactjs.org/'
+      },
+      {
+         'lib': 'AngularJs',
+         'link': 'https://angular.io/'
+      },
+      {
+         'lib': 'VueJs',
+         'link': 'https://vuejs.org/'
+      }
+   ];
+   
+   const [libraries, setLibraries] = useState(array);
+   const [value, setValue] = useState(null);
+   const handleOnSubmit = (e) => {
+      e.preventDefault();
+      setLibraries([...libraries, value]);
    }
- ];
+   const handleOnChange = (e) => {
+      setValue({...value, [e.target.name] : e.target.value})
+   }
 
- ReactDOM.render(
-   <Library array={array}/>,
-   document.getElementById('rootTest')
- );
+   return (
+      <div className="App">
+         <header className="App-header">
+            <form onSubmit={handleOnSubmit}>
+               <input type="text" name="lib" placeholder='library' onChange={handleOnChange}/>
+               <input type="text" name="link" placeholder='link' onChange={handleOnChange}/>
+               <button type='submit'>Add</button>
+            </form>
+            {libraries.map((item) => {
+              return  <Library key={item.lib} {...item} />
+            })}
+         </header>
+      </div>
+   );
+}
+
+function Library(props) {
+   return(
+      <li><a href={props.link}>{props.lib}</a></li>
+   )
+}
 
 export default App;

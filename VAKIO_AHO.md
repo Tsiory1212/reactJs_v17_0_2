@@ -11,7 +11,7 @@ React v 17.0.2
 https://stackoverflow.com/questions/46566830/how-to-use-create-react-app-with-an-older-react-version
 
 # Tools
-Extension : React Developper Tools (Inspection DOM)
+Extension navigateur : React Developper Tools (Inspection DOM)
 
 # Hooks
 *Expression*
@@ -21,4 +21,9 @@ Extension : React Developper Tools (Inspection DOM)
         Mais lorsqu'on appelle setDate(), on doit definir le nouveau valeur. 
         Ex : setDate('New val')
         Qui changera la valeur de "date" dans toute l'application
-    => date : etat actuel, setDate() : etat suivant
+    => date : etat actuel, setDate('newDate) : changera la valeur date en newDate
+
+
+# Javascript
+*Push object*
+    obj['key3'] = 'value3'        équivaut à      obj = {...obj, 'key3': 'value3'};
