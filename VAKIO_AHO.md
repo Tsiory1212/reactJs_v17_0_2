@@ -20,10 +20,17 @@ Extension navigateur : React Developper Tools (Inspection DOM)
     => setDate() = useState(), 
         Mais lorsqu'on appelle setDate(), on doit definir le nouveau valeur. 
         Ex : setDate('New val')
-        Qui changera la valeur de "date" dans toute l'application
-    => date : etat actuel, setDate('newDate) : changera la valeur date en newDate
+        Qui changera la valeur de "date" ... (variable locale)
+    => date : etat actuel, setDate('newDate') : changera la valeur date en newDate
 
 
 # Javascript
+*Condition ternaire*
+{val ? `value if true`: val}      équivaut à      {val && `value if true`}
+
 *Push object*
     obj['key3'] = 'value3'        équivaut à      obj = {...obj, 'key3': 'value3'};
+
+*Fonction fléchée*
+    **ATTENTION !!!**
+    https://fr.reactjs.org/docs/faq-functions.html#how-do-i-pass-an-event-handler-like-onclick-to-a-component

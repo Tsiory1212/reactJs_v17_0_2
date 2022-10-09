@@ -1,53 +1,80 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useRef, useEffect, useReducer } from 'react';
 
+const initialState = {
+   items: [],
+   value: null,
+   editing: false,
+};
+const reducer = (state = initialState, action) => {
+   switch (action.type) {
+      case "change":
+         return {
+            ...state,
+            value: action.payload.value,
+            editing: true,
+         };
+      case "setEditing":
+         return {
+            ...state,
+            editing: false
+         };
+      case "add":
+         return {};
+      case "remove":
+         return {};
+      default:
+         return state;
+   }
+}
 
 function App() {
-   const array = [
-      {
-         'lib': 'ReactJs',
-         'link': 'https://fr.reactjs.org/'
-      },
-      {
-         'lib': 'AngularJs',
-         'link': 'https://angular.io/'
-      },
-      {
-         'lib': 'VueJs',
-         'link': 'https://vuejs.org/'
-      }
-   ];
+   const inputRef = useRef();
+   const [state, dispatch] = useReducer(reducer, initialState);
    
-   const [libraries, setLibraries] = useState(array);
-   const [value, setValue] = useState(null);
+   useEffect(() => console.log(state.value), [state.value]);
+
+   const handleOnChange = (e) =>  { 
+      dispatch({type: "change", payload: {value: e.target.value } });
+      setTimeout(() =>  dispatch({type: "setEditing"}), 1000 );
+   };
    const handleOnSubmit = (e) => {
       e.preventDefault();
-      setLibraries([...libraries, value]);
+      if (!state.value) {
+         return false;
+      }
+      addItem();
    }
-   const handleOnChange = (e) => {
-      setValue({...value, [e.target.name] : e.target.value})
+
+   const addItem = () =>  {
+      // setItems([...items, {id: (new Date()).getTime(), text: value}]);
+      // setValue(null);
+      
+      inputRef.current.value = null;
    }
+
+   const removeItem = (id) => {
+      // const filtered = state.items.filter((item) => item.id !== id)
+      // setItems(filtered);
+   }
+
 
    return (
       <div className="App">
          <header className="App-header">
             <form onSubmit={handleOnSubmit}>
-               <input type="text" name="lib" placeholder='library' onChange={handleOnChange}/>
-               <input type="text" name="link" placeholder='link' onChange={handleOnChange}/>
-               <button type='submit'>Add</button>
+               <input ref={inputRef} type="text" onChange={handleOnChange} /> <button type="submit">Add</button>
+               <br/>
+               <ul>
+                  {state.items.map((item, index) => {
+                     return <li key={index} onClick={() => removeItem(item.id)}>{item.text}</li>
+                  })}
+               </ul>
             </form>
-            {libraries.map((item) => {
-              return  <Library key={item.lib} {...item} />
-            })}
          </header>
       </div>
    );
 }
 
-function Library(props) {
-   return(
-      <li><a href={props.link}>{props.lib}</a></li>
-   )
-}
 
 export default App;
