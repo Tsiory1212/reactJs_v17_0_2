@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useRef, useEffect, useReducer } from 'react';
+import { useRef, useEffect, useReducer } from 'react';
 
 const initialState = {
    items: [],
@@ -20,9 +20,16 @@ const reducer = (state = initialState, action) => {
             editing: false
          };
       case "add":
-         return {};
+         return {
+            ...state, 
+            items: [...state.items, {id: new Date().getTime(), text: state.value}],
+            value: null
+         };
       case "remove":
-         return {};
+         return {
+            ...state,
+            items: state.items.filter((item) => item.id !== action.payload.id),
+         };
       default:
          return state;
    }
@@ -47,15 +54,12 @@ function App() {
    }
 
    const addItem = () =>  {
-      // setItems([...items, {id: (new Date()).getTime(), text: value}]);
-      // setValue(null);
-      
+      dispatch({type: "add"})
       inputRef.current.value = null;
    }
 
    const removeItem = (id) => {
-      // const filtered = state.items.filter((item) => item.id !== id)
-      // setItems(filtered);
+      dispatch({type: "remove", payload: {id}})
    }
 
 
