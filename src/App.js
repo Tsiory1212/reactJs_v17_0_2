@@ -4,21 +4,22 @@ import {Context} from "./Context";
 
 function Form() {
    const inputRef = useRef();
-   const {state, dispatch} = useContext(Context);
-   const handleOnChange = (e) =>  { 
-      dispatch({type: "change", payload: {value: e.target.value } });
+   const {state, dispatch, onChange, inputValue} = useContext(Context);
+   const handleOnChange = (e) =>  {
+      onChange(e.target.value);
       setTimeout(() =>  dispatch({type: "setEditing"}), 1000 );
    };
    const handleOnSubmit = (e) => {
       e.preventDefault();
-      if (!state.value) {
+      if (!inputValue) {
          return false;
       }
       addItem();
+      onChange(null) ;
    }
 
    const addItem = () =>  {
-      dispatch({type: "add"})
+      dispatch({type: "add", payload: {value: inputValue}})
       inputRef.current.value = null;
    }
    

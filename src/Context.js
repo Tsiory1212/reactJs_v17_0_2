@@ -1,20 +1,13 @@
-import { createContext, useReducer } from "react";
+import { createContext, useMemo, useReducer, useState } from "react";
 
 export const Context = createContext();
 
 const initialState = {
     items: [],
-    value: null,
     editing: false,
  };
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-       case "change":
-          return {
-             ...state,
-             value: action.payload.value,
-             editing: true,
-          };
        case "setEditing":
           return {
              ...state,
@@ -23,7 +16,7 @@ const reducer = (state = initialState, action) => {
        case "add":
           return {
              ...state, 
-             items: [...state.items, {id: new Date().getTime(), text: state.value}],
+             items: [...state.items, {id: new Date().getTime(), text: action.payload.value}],
              value: null
           };
        case "remove":
@@ -38,7 +31,19 @@ const reducer = (state = initialState, action) => {
  
  const Provider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
-    return <Context.Provider value={{state, dispatch}} >{children}</Context.Provider>
+    const [inputValue, setInputState] = useState(null);
+    const handleOnChange = (value) => setInputState(value);
+    const value = useMemo(() => {
+      return {
+         state,
+         inputValue, 
+         dispatch,
+         onChange: handleOnChange
+      }
+    }, [state, inputValue]);
+    return (
+      <Context.Provider value={value} >{children}</Context.Provider>
+   );
 }
 
 export default Provider;
