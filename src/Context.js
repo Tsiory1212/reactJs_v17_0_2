@@ -1,4 +1,4 @@
-import { createContext, useMemo, useReducer, useState } from "react";
+import { createContext, useCallback, useMemo, useReducer, useState } from "react";
 
 export const Context = createContext();
 
@@ -31,16 +31,28 @@ const reducer = (state = initialState, action) => {
  
  const Provider = ({children}) => {
     const [state, dispatch] = useReducer(reducer, initialState);
-    const [inputValue, setInputState] = useState(null);
-    const handleOnChange = (value) => setInputState(value);
-    const value = useMemo(() => {
+    const [inputValue, setInputValue] = useState(null);
+   const handleOnChange = (e) =>  {
+      setInputValue(e.target.value);
+      setTimeout(() =>  dispatch({type: "setEditing"}), 1000 );
+   };
+   const addItem = useCallback(() =>  {
+      dispatch({type: "add", payload: {value: inputValue}})
+      setInputValue(null);
+   }, [inputValue]);
+   const removeItem = (id) => {
+      dispatch({type: "remove", payload: {id}})
+   }
+   const value = useMemo(() => {
       return {
          state,
          inputValue, 
+         addItem,
+         removeItem,
          dispatch,
          onChange: handleOnChange
       }
-    }, [state, inputValue]);
+    }, [state, addItem, inputValue]);
     return (
       <Context.Provider value={value} >{children}</Context.Provider>
    );
