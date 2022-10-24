@@ -1,21 +1,19 @@
 import './App.css';
+import Angular from './Angular';
+import React from './React';
 
-const withHOC = (Component) => () => {
-   const learn = "Learn React";
-   return <Component text={learn}/>
-}
 
-function App({text}) {
-   // useEffect(() => console.log(state.value), [state.value]);
 
+function App() {
    return (
       <div className="App">
          <header className="App-header">
-         {text}
+               <Angular content='Angular' link="https://angular.io"/>
+               <React content='React' link="https://reactjs.org/"/>
          </header>
       </div>
    );
 }
 
 
-export default withHOC(App);
+export default App;
