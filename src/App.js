@@ -1,34 +1,41 @@
 import './App.css';
 import React from './React';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {  Context } from './context';
 
 // Login
-function Login({connect}){
+function Login(){
+   const {connect, user} = useContext(Context);
    const [value, setValue] = useState(null);
    const handleOnSubmit = (e) => {
-       connect(e, value)
+      connect(e, value)
    }
    const handleOnChange = (e) => setValue(e.target.value);
 
    return (
-      <>
-         <p>User not connected</p>
-         <form onSubmit={handleOnSubmit}>
-          
-            <input type="text" placeholder='Username' onChange={handleOnChange} />&nbsp;
-            <button>Login</button>
-         </form>
-      </>
+      !user && (
+         <>
+            {/* <p>User not connected</p> */}
+            <form onSubmit={handleOnSubmit}>
+            
+               <input type="text" placeholder='Username' onChange={handleOnChange} />&nbsp;
+               <button>Login</button>
+            </form>
+         </>
+      )
    );
 }
 
-function Home({disconnect}) {
+function Home() {
+   const {disconnect, user} = useContext(Context);
+   
    return (
-      <>
-         <p>App</p>
-         <button onClick={disconnect}>Disconnect</button>
-      </>
+      !!user && (
+         <>
+            <p>App</p>
+            <button onClick={disconnect}>Disconnect</button>
+         </>
+      )
    );
 }
 
@@ -37,11 +44,8 @@ function App() {
    return (
       <div className="App">
          <header className="App-header">
-            <Context.Consumer>
-               {(value) => {
-                 return !!value.user ? <Home {...value}/> : <Login {...value}/>;
-               }}
-            </Context.Consumer>
+            <Home />
+            <Login />
          </header>
       </div>
    );

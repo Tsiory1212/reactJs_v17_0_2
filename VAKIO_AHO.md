@@ -25,12 +25,16 @@ Extension navigateur : React Developper Tools (Inspection DOM)
 
 
 # Javascript
-*Condition ternaire*
-{val ? `value if true`: val}      équivaut à      {val && `value if true`}
+*Opérateur ternaire*
+{`condition` ? `value if true`: `value if false`} 
 
+*Opérateur logique*
+{`condition` && `value if condition is true`}  <!--  #condition peut être true ou false -->
+ 
 *Push object*
     obj['key3'] = 'value3'        équivaut à      obj = {...obj, 'key3': 'value3'};
 
 *Fonction fléchée*
+    appelFuncition      équivaut à       () => appelFuncition()
     **ATTENTION !!!**
     https://fr.reactjs.org/docs/faq-functions.html#how-do-i-pass-an-event-handler-like-onclick-to-a-component
