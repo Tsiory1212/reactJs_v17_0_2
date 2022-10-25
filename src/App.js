@@ -4,32 +4,32 @@ import { useState } from 'react';
 import {  Context } from './context';
 
 // Login
-function Login(){
+function Login({connect}){
    const [value, setValue] = useState(null);
-
    const handleOnSubmit = (e) => {
-      e.preventDefaul();
-      if (!value) {
-         return false;
-      }
-      
-   };
-   const handleOnChange = (e) => {
-      setValue(e.target.value)
+       connect(e, value)
    }
+   const handleOnChange = (e) => setValue(e.target.value);
+
    return (
       <>
          <p>User not connected</p>
          <form onSubmit={handleOnSubmit}>
-            <input type="text" placeholder='Add username to connect' onChange={handleOnChange} />&nbsp;
+          
+            <input type="text" placeholder='Username' onChange={handleOnChange} />&nbsp;
             <button>Login</button>
          </form>
       </>
    );
 }
 
-function Home() {
-   return  <p>App</p>;
+function Home({disconnect}) {
+   return (
+      <>
+         <p>App</p>
+         <button onClick={disconnect}>Disconnect</button>
+      </>
+   );
 }
 
 
@@ -39,7 +39,7 @@ function App() {
          <header className="App-header">
             <Context.Consumer>
                {(value) => {
-                  return <Home/>
+                 return !!value.user ? <Home {...value}/> : <Login {...value}/>;
                }}
             </Context.Consumer>
          </header>
